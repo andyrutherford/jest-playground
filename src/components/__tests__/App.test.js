@@ -2,7 +2,7 @@ import React from 'react';
 import App from 'components/App';
 import CommentBox from 'components/CommentBox';
 import CommentList from 'components/CommentList';
-import { shallow, render } from 'enzyme';
+import { shallow } from 'enzyme';
 
 let wrapper;
 
@@ -26,7 +26,3 @@ it('shallow render with enzyme', () => {
   expect(wrapper).toMatchSnapshot();
 });
 
-it('render with enzyme', () => {
-  const wrapper = render( <App /> );
-  expect(wrapper).toMatchSnapshot();
-});

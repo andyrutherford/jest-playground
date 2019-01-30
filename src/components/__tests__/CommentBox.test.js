@@ -1,12 +1,12 @@
 import React from 'react';
 import CommentBox from 'components/CommentBox';
 import { mount } from 'enzyme';
-import { WSAVERNOTSUPPORTED } from 'constants';
+import Root from 'Root';
 
 let wrapper;
 
 beforeEach(() => {
-  wrapper = mount(<CommentBox />);
+  wrapper = mount(<Root><CommentBox /></Root>);
 });
 
 afterEach(() => {
@@ -18,23 +18,24 @@ it('has a text area and a button', () => {
   expect(wrapper.find('button').length).toEqual(1);
 });
 
-it('has a text area that users can type in', () => {
-  wrapper.find('textarea').simulate('change', {
-    target: { value: 'new comment'}
+//Group together tests with common behavior
+describe('the text area', () => {
+
+  beforeEach(() => {
+    wrapper.find('textarea').simulate('change', {
+      target: { value: 'new comment'}
+    });
+    wrapper.update();
   });
 
-  //Force component to update
-  wrapper.update();
-
-  expect(wrapper.find('textarea').prop('value')).toEqual('new comment');
-});
-
-it('clears text after submit', () => {
-  wrapper.find('textarea').simulate('change', {
-    target: { value: 'another comment'}
+  it('has a text area that users can type in', () => {
+    expect(wrapper.find('textarea').prop('value')).toEqual('new comment');
   });
-  wrapper.update();
-  wrapper.find('form').simulate('submit');
-  wrapper.update();
-  expect(wrapper.find('textarea').prop('value')).toEqual('');
+
+  it('clears text after submit', () => {
+    // expect(wrapper.find('textarea').prop('value')).toEqual('another comment');
+    wrapper.find('form').simulate('submit');
+    wrapper.update();
+    expect(wrapper.find('textarea').prop('value')).toEqual('');
+  });
 });
