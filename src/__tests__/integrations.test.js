@@ -4,6 +4,7 @@ import moxios from 'moxios';
 import Root from 'Root';
 import App from 'components/App';
 
+
 //Trick axios using moxios
 beforeEach(() => {
     moxios.install();
@@ -20,7 +21,7 @@ afterEach(() => {
 //  1.  Render entire app
 //  2.  find the fetchComments button and click it
 //  3.  Expect to find a list of comments
-it('can fetch a list of comments and display them', () => {
+it('can fetch a list of comments and display them', (done) => {
     const wrapper = mount(
         <Root>
             <App />
@@ -29,5 +30,11 @@ it('can fetch a list of comments and display them', () => {
 
     wrapper.find('.fetch-comments').simulate('click');
 
-    expect(wrapper.find('li').length).toEqual(2);
+    //Force a pause so moxios can complete before expect statement
+    moxios.wait(() => {
+       wrapper.update()
+        expect(wrapper.find('li').length).toEqual(2);
+        done();
+        wrapper.unmount();
+    });
 }); 
