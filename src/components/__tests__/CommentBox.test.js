@@ -13,9 +13,9 @@ afterEach(() => {
   wrapper.unmount();
 });
 
-it('has a text area and 2 button', () => {
+it('has a text area and three button', () => {
   expect(wrapper.find('textarea').length).toEqual(1);
-  expect(wrapper.find('button').length).toEqual(2);
+  expect(wrapper.find('button').length).toEqual(3);
 });
 
 //Group together tests with common behavior
@@ -38,4 +38,11 @@ describe('the text area', () => {
     wrapper.update();
     expect(wrapper.find('textarea').prop('value')).toEqual('');
   });
+});
+
+describe('the Clear All button', () => {
+  it('removes all comments', () => {
+    wrapper.find('.clear-comments').simulate('click');
+    expect(wrapper.find('li').length).toEqual(0);
+  })
 });

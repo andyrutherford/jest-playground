@@ -16,6 +16,8 @@ class CommentBox extends Component {
     this.setState({ comment: '' });
   };
 
+
+
   render() {
     return (
       <div>
@@ -31,6 +33,9 @@ class CommentBox extends Component {
         <button 
           className="fetch-comments"
           onClick={this.props.fetchComments}>Fetch Comments</button>
+        <button
+          className="clear-comments"
+          onClick={this.props.clearComments}>Clear All</button>
       </div>
 
     );
